@@ -10,7 +10,7 @@ The objective of this project is to implement, evaluate, and compare five distin
 - **Target:** Binary classification (`1` for Quality >= 6, `0` for Quality < 6)
 
 ## c. GitHub Repository Link
-`https://github.com/<YOUR-GITHUB-USERNAME>/ML_Assignment_2`
+`(https://github.com/MounikaMude-1/ml-assignment-2)`
 
 ## d. Models Used
 
