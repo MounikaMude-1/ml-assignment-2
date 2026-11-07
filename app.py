@@ -1,3 +1,5 @@
+
+import os
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -14,6 +16,9 @@ st.set_page_config(page_title="Wine Quality Classification", layout="wide")
 
 st.title("📊 Wine Quality ML Classification Benchmark")
 st.markdown("Upload test dataset (CSV) containing feature variables and the `target` column to evaluate pre-trained models.")
+
+# Determine base directory path
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Sidebar Controls
 st.sidebar.header("Configurations")
@@ -43,17 +48,20 @@ if uploaded_file is not None:
             X_test = df_test.drop(columns=['target'])
             y_test = df_test['target']
             
-            # Load pre-trained scaler and chosen model
-            scaler = joblib.load("model/scaler.pkl")
+            # Look directly in root directory (where scaler.pkl is located on GitHub)
+            scaler_path = os.path.join(BASE_DIR, "scaler.pkl")
+            scaler = joblib.load(scaler_path)
+            
             model_file_map = {
-                "Logistic Regression": "model/logistic_regression.pkl",
-                "Decision Tree": "model/decision_tree.pkl",
-                "KNN": "model/knn.pkl",
-                "Naive Bayes": "model/naive_bayes.pkl",
-                "Support Vector Machine": "model/support_vector_machine.pkl"
+                "Logistic Regression": os.path.join(BASE_DIR, "logistic_regression.pkl"),
+                "Decision Tree": os.path.join(BASE_DIR, "decision_tree.pkl"),
+                "KNN": os.path.join(BASE_DIR, "knn.pkl"),
+                "Naive Bayes": os.path.join(BASE_DIR, "naive_bayes.pkl"),
+                "Support Vector Machine": os.path.join(BASE_DIR, "support_vector_machine.pkl")
             }
             
-            model = joblib.load(model_file_map[model_choice])
+            model_path = model_file_map[model_choice]
+            model = joblib.load(model_path)
             
             # Scale input features for distance/linear models
             if model_choice in ["Logistic Regression", "KNN", "Support Vector Machine"]:
